@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Model\MoneyLocker.Model.csproj" />
+    <ProjectReference Include="..\MoneyLocker.Data\MoneyLocker.Data.csproj" />
+  </ItemGroup>
+
+</Project>
