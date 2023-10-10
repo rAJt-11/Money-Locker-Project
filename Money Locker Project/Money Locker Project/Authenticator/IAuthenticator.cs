@@ -1,4 +1,5 @@
 ﻿using MoneyLocker.Model;
+using MoneyLocker.Model.Validator;
 
 namespace Money_Locker_Project.Authenticator
 {

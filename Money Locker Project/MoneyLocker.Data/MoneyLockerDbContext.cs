@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyLocker.Data.Schema;
-using System.Collections.Generic;
 
 namespace MoneyLocker.Data
 {
@@ -11,6 +10,5 @@ namespace MoneyLocker.Data
         }
 
         public DbSet<UserInfo> UserInfo { get; set; }
-
     }
 }

@@ -1,4 +1,4 @@
-﻿using MoneyLocker.Model;
+﻿using MoneyLocker.Model.Payment;
 using Newtonsoft.Json;
 using Razorpay.Api;
 using System.Text;
