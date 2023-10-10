@@ -2,7 +2,7 @@
 
 namespace MoneyLocker.Model
 {
-    public class ResponseModel
+    public class ResponseInfo
     {
         [JsonProperty("isSuccess")]
         public bool IsSuccess { get; set; }

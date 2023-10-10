@@ -1,15 +1,9 @@
 ﻿using Newtonsoft.Json;
 
-namespace MoneyLocker.Model
+namespace MoneyLocker.Model.User
 {
-    public class UserSignUp
+    public class UserLogin
     {
-        [JsonProperty("firstName")]
-        public string FirstName { get; set; }
-
-        [JsonProperty("lastName")]
-        public string LastName { get; set; }
-
         [JsonProperty("mobile")]
         public string Mobile { get; set; }
 
@@ -19,4 +13,5 @@ namespace MoneyLocker.Model
         [JsonProperty("password")]
         public string Password { get; set; }
     }
+
 }

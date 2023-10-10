@@ -1,4 +1,4 @@
-﻿namespace MoneyLocker.Model
+﻿namespace MoneyLocker.Model.Payment
 {
     public class PaymentRequest
     {

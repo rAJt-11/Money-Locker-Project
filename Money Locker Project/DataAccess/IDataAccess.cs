@@ -1,4 +1,4 @@
-﻿using MoneyLocker.Model;
+﻿using MoneyLocker.Model.User;
 
 namespace MoneyLocker.DataAccess
 {
@@ -6,8 +6,7 @@ namespace MoneyLocker.DataAccess
     {
         public string AddUser(UserSignUp addUser);
 
-        public bool AuthenticateUser(UserLoginModel loginModel);
+        public bool AuthenticateUser(UserLogin userLogin);
 
-        public string GetUser(string mobilenumber);
     }
 }

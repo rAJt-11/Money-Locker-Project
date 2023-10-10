@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoneyLocker.Model;
+using MoneyLocker.Model.Payment;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

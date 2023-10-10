@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MoneyLocker.Model
+namespace MoneyLocker.Model.Payment
 {
     public class PaymentResponse
     {
