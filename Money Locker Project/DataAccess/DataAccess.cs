@@ -1,5 +1,6 @@
 ﻿using MoneyLocker.Data;
 using MoneyLocker.Data.Schema;
+using MoneyLocker.Model.Payment;
 using MoneyLocker.Model.User;
 using System.Linq;
 
@@ -39,7 +40,7 @@ namespace MoneyLocker.DataAccess
 
         public bool AuthenticateUser(UserLogin userLogin)
         {
-            if (!string.IsNullOrEmpty(userLogin.Mobile))
+            if (userLogin.Mobile > 0)
             {
                 var user = dbContext.UserInfo.FirstOrDefault(u => u.Mobile == userLogin.Mobile);
                 if (user != null && user.Password == userLogin.Password)
@@ -59,5 +60,46 @@ namespace MoneyLocker.DataAccess
             return false;
         }
 
+        public UserDetails GetUserDetails(long mobileNo, string emailId)
+        {
+            UserDetails user = new();
+            if (mobileNo > 0)
+            {
+                var userInfo = dbContext.UserInfo.FirstOrDefault(u => u.Mobile == mobileNo);
+                user.FirstName = userInfo.FirstName;    
+                user.LastName = userInfo.LastName;
+                user.Email = userInfo.Email;     
+            }
+            else
+            {
+                var userInfo = dbContext.UserInfo.FirstOrDefault(u => u.Email == emailId);
+                user.FirstName = userInfo.FirstName;
+                user.LastName = userInfo.LastName;
+                user.Mobile= userInfo.Mobile;
+            }
+
+            return user;
+        }
+
+        public void UpdatePaymentInfo(PaymentInfo paymentInfo)
+        {
+            Payment payment = new()
+            {
+                UserId = paymentInfo.UserId,
+                CreatedDate = paymentInfo.CreatedDate,
+                Amount = paymentInfo.Amount,
+                Status = paymentInfo.Status
+            };
+
+            try
+            {
+                dbContext.Payment.Add(payment);
+                dbContext.SaveChangesAsync(); 
+            }
+            catch
+            {
+                
+            }
+        }
     }
 }

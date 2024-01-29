@@ -7,24 +7,25 @@ using MoneyLocker.Model.User;
 using MoneyLocker.Model.Validator;
 using System;
 using System.Net;
+using System.Text.Json;
+using static MoneyLocker.CommonUtility.Constants;
 
 namespace Money_Locker_Project.Controllers
 {
-    [Route("user")]
     [ApiController]
-    public class User : ControllerBase
+    public class UserController : ControllerBase
     {
         public readonly IAuthenticator Authenticator;
         public readonly IDataAccess DataAccess;
 
-        public User(IAuthenticator _Authenticator, IDataAccess _dataAccess)
+        public UserController(IAuthenticator _authenticator, IDataAccess _dataAccess)
         {
-            Authenticator = _Authenticator;
+            Authenticator = _authenticator;
             DataAccess = _dataAccess;
         }
 
         #region User Login
-        [Route("/login")]
+        [Route(API_Route.User + End_Point.Login)]
         [HttpPost]
         public ResponseInfo Login(UserLogin requestInfo)
         {
@@ -57,7 +58,7 @@ namespace Money_Locker_Project.Controllers
                         response.IsSuccess = true;
                         response.Data = "Login Failed";
                         response.StatusCode = (int)HttpStatusCode.OK;
-                    }      
+                    }
                 }
             }
             catch (Exception ex)
@@ -73,7 +74,7 @@ namespace Money_Locker_Project.Controllers
 
         #region User SignUp
         [HttpPost]
-        [Route("/signup")]
+        [Route(API_Route.User + End_Point.SignUp)]
         public ResponseInfo SignUp(UserSignUp requestInfo)
         {
             ResponseInfo response = new();
@@ -89,20 +90,54 @@ namespace Money_Locker_Project.Controllers
                 {
                     response.IsSuccess = false;
                     response.ErrorInfo = errorInfo;
-                    response.StatusCode = (int)HttpStatusCode.BadRequest; 
+                    response.StatusCode = (int)HttpStatusCode.BadRequest;
                 }
                 else
                 {
                     response.Data = DataAccess.AddUser(requestInfo);
                     response.IsSuccess = true;
-                    response.StatusCode = (int)HttpStatusCode.OK;  
+                    response.StatusCode = (int)HttpStatusCode.OK;
                 }
 
             }
             catch (Exception ex)
             {
                 response.IsSuccess = false;
-                response.Data = ex.Message + ex.StackTrace + ex.Source; 
+                response.Data = ex.Message + ex.StackTrace + ex.Source;
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            }
+
+            return response;
+        }
+        #endregion
+
+        #region User Details
+        [Route(API_Route.User + End_Point.Details)]
+        [HttpGet]
+        public ResponseInfo GetUserDetails(long mobileNo, string emailId)
+        {
+            ResponseInfo response = new();
+            try
+            {
+                UserDetails userDetails = DataAccess.GetUserDetails(mobileNo, emailId);
+                if (userDetails != null)
+                {
+                    response.Message = "User Details Fetched Successfully";
+                    response.Data = JsonSerializer.Serialize(userDetails);
+                    response.IsSuccess = true;
+                    response.StatusCode = (int)HttpStatusCode.OK;
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.Message = "User Details Not Found";
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Data = ex.Message + ex.StackTrace + ex.Source;
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
 

@@ -8,6 +8,7 @@
         public int Money_Locker_Amount { get; set; }
         public bool MoneyLocker_IsOpted { get; set; }
         public string Money_Locker_OrderId { get; set; }
+        public long UserId { get; set; }
     }
 
     //public class TransactionRequest

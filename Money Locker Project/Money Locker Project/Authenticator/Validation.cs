@@ -54,12 +54,12 @@ namespace Money_Locker_Project.Authenticator
                 errorInfo.ErrorList.Add(errors);
             }
 
-            if (string.IsNullOrEmpty(request.Mobile))
+            if (request.Mobile > 0)
             {
                 errors.Type = "Missing Parameter";
                 errors.ErrorMsg = "User mobile number is missing in request payload";
                 errorInfo.ErrorList.Add(errors);
-                if (!Regex.IsMatch(request.Mobile, Constants.RegX.Mobile))
+                if (!Regex.IsMatch(request.Mobile.ToString(), Constants.RegX.Mobile))
                 {
                     errors.Type = "Invalid Parameter";
                     errors.ErrorMsg = "User mobile number is invalid in request payload";
@@ -100,12 +100,12 @@ namespace Money_Locker_Project.Authenticator
         {
             ErrorDetailInfo errors = new();
 
-            if (string.IsNullOrEmpty(request.Mobile) && string.IsNullOrEmpty(request.Email))
+            if (string.IsNullOrEmpty(request.Email) && request.Mobile > 0)
             {
                 errors.Type = "Missing Parameter";
                 errors.ErrorMsg = "User mobile number is missing in request payload";
                 errorInfo.ErrorList.Add(errors);
-                if (!Regex.IsMatch(request.Mobile, Constants.RegX.Mobile))
+                if (!Regex.IsMatch(request.Mobile.ToString(), Constants.RegX.Mobile))
                 {
                     errors.Type = "Invalid Parameter";
                     errors.ErrorMsg = "User mobile number is invalid in request payload";
@@ -113,7 +113,7 @@ namespace Money_Locker_Project.Authenticator
                 }
             }
 
-            if (string.IsNullOrEmpty(request.Email) && string.IsNullOrEmpty(request.Mobile))
+            if (!string.IsNullOrEmpty(request.Email) && request.Mobile < 0)
             {
                 errors.Type = "Missing Parameter";
                 errors.ErrorMsg = "User email is missing in request payload";

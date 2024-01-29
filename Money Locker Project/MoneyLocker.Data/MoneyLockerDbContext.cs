@@ -10,5 +10,7 @@ namespace MoneyLocker.Data
         }
 
         public DbSet<UserInfo> UserInfo { get; set; }
+
+        public DbSet<Payment> Payment { get; set; }
     }
 }

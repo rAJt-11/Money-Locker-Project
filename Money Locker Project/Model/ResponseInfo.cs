@@ -13,6 +13,9 @@ namespace MoneyLocker.Model
         [JsonProperty("data")]
         public string Data { get; set; }
 
+        [JsonProperty("message")]
+        public string Message { get; set; }
+
         [JsonProperty("errorInfo")]
         public ErrorInfo ErrorInfo { get; set; }
 

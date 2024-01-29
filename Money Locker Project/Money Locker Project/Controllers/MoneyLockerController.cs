@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Money_Locker_Project.Authenticator;
+using MoneyLocker.DataAccess;
 using MoneyLocker.Model;
 using MoneyLocker.Model.Payment;
 using Newtonsoft.Json;
@@ -8,14 +10,23 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
+using static MoneyLocker.CommonUtility.Constants;
 
 namespace Money_Locker_Project.Controllers
 {
-    [Route("api/moneylocker/transaction")]
     [ApiController]
-    public class MoneyLockerTransactionController : ControllerBase
+    public class MoneyLockerController : ControllerBase
     {
+        public readonly IAuthenticator Authenticator;
+        public readonly IDataAccess DataAccess;
 
+        public MoneyLockerController(IAuthenticator _authenticator, IDataAccess _dataAccess)
+        {
+            Authenticator = _authenticator;
+            DataAccess = _dataAccess;
+        }
+
+        [Route(API_Route.MoneyLocker + End_Point.Transaction)]
         [HttpPost]
         public IActionResult MoneyLockerTransactionProcess(PaymentRequest request)
         {
@@ -67,6 +78,7 @@ namespace Money_Locker_Project.Controllers
                 PaymentRequest moneyLockerTransaction = new();
                 moneyLockerTransaction.Money_Locker_Amount = request.Money_Locker_Amount;
                 moneyLockerTransaction.Money_Locker_Transaction_Id = request.Money_Locker_Transaction_Id;
+                CreateRazorpayRequest(moneyLockerTransaction);//Updates Request In DB
                 GatewayResponse gatewayResponse = InitiatePaymentProcess(moneyLockerTransaction);
                 response.MoneyLockerSuccessMsg = gatewayResponse.MoneyLockerSuccessMsg;
                 response.IsSuccess = gatewayResponse.IsSuccess;
@@ -119,8 +131,21 @@ namespace Money_Locker_Project.Controllers
             return errorResponse;
         }
 
+        private void CreateRazorpayRequest(PaymentRequest moneyLockerTransaction)
+        {
+            PaymentInfo paymentInfo = new()
+            {
+            UserId = moneyLockerTransaction.UserId,
+            Amount = moneyLockerTransaction.Money_Locker_Amount,
+            Status = PaymentStatusType.Pre_Init,
+            CreatedDate = DateTime.Now
+            };
+            DataAccess.UpdatePaymentInfo(paymentInfo);
+        }
+
         private GatewayResponse InitiatePaymentProcess(PaymentRequest paymentRequest)
         {
+            //MoneyLocker.PaymentGateway.InitiateOrder();
             string paymentGatewayUrl = "https://payment-gateway-url.com/api/initiate-payment";
 
             // Convert paymentRequest to JSON

@@ -1,9 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MoneyLocker.Data.Schema
 {
     public class UserInfo
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Range(1000, 9999, ErrorMessage = "RequestId must be a 4-digit number between 1000 and 9999")]
+        public int UserId { get; set; }
+
         [Required]
         [MaxLength(50, ErrorMessage = "First Name cannot exceed more than 25 characters")]
         public string FirstName { get; set; }
@@ -13,9 +19,8 @@ namespace MoneyLocker.Data.Schema
         public string LastName { get; set; }
 
         [Required]
-        [Key]
         [RegularExpression("^[6-9][0-9]{9}$", ErrorMessage = "Invalid Phone No. Format")]
-        public string Mobile { get; set; }
+        public long Mobile { get; set; }
 
         [Required]
         [RegularExpression("\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*", ErrorMessage = "Invalid Email Format")]

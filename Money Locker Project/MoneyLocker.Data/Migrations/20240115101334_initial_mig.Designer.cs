@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyLocker.Data;
 
@@ -11,9 +12,11 @@ using MoneyLocker.Data;
 namespace MoneyLocker.Data.Migrations
 {
     [DbContext(typeof(MoneyLockerDbContext))]
-    partial class MoneyLockerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240115101334_initial_mig")]
+    partial class initial_mig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,8 +53,8 @@ namespace MoneyLocker.Data.Migrations
                     b.Property<long>("TransactionNumber")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("RequestId");
 
@@ -60,11 +63,8 @@ namespace MoneyLocker.Data.Migrations
 
             modelBuilder.Entity("MoneyLocker.Data.Schema.UserInfo", b =>
                 {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    b.Property<string>("Mobile")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -80,14 +80,11 @@ namespace MoneyLocker.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long>("Mobile")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Mobile");
 
                     b.ToTable("UserInfo");
                 });

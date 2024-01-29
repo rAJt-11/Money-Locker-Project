@@ -10,7 +10,6 @@ namespace MoneyLocker.PaymentGateway
 
         private static readonly Random random = new();
 
-
         public static PaymentRequest InitiateOrder(PaymentRequest moneyLockerTransaction)
         {
             moneyLockerTransaction.Money_Locker_Transaction_Id = GenerateTransactionId();
@@ -30,7 +29,6 @@ namespace MoneyLocker.PaymentGateway
 
             moneyLockerTransaction.Money_Locker_OrderId = order["id"].ToString();
             return moneyLockerTransaction;
-
 
         }
 

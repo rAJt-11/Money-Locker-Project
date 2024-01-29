@@ -2,7 +2,7 @@
 
 namespace MoneyLocker.Model.User
 {
-    public class UserSignUp
+    public class UserDetails
     {
         [JsonProperty("firstName")]
         public string FirstName { get; set; }
@@ -16,7 +16,5 @@ namespace MoneyLocker.Model.User
         [JsonProperty("email")]
         public string Email { get; set; }
 
-        [JsonProperty("password")]
-        public string Password { get; set; }
     }
 }

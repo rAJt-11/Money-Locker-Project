@@ -34,5 +34,33 @@
         Has a minimum length of 8 characters.
         **/
 
+        public struct API_Route
+        {
+            public const string User = "/api/User"; 
+            public const string MerchatPayment = "/api/MerchatPayment";
+            public const string MoneyLocker = "/api/MoneyLocker";
+        }
+
+        public struct End_Point
+        {
+            //User
+            public const string Login = "/login";
+            public const string SignUp = "/signup";
+            public const string Details = "/userDetails";
+
+            //MoneyLocker
+            public const string Transaction = "/transaction";
+
+            //MerchatPayment
+            public const string Payments = "/payments";
+        }
+
+        public struct PaymentStatusType
+        {
+            public const string Auth = "AUTH";
+            public const string Init = "INIT";
+            public const string Pre_Init = "PRE_INIT";
+        }
+
     }
 }

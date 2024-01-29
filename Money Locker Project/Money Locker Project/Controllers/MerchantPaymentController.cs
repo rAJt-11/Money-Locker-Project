@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Text;
+using static MoneyLocker.CommonUtility.Constants;
 
 namespace Money_Locker_Project.Controllers
 {
@@ -16,7 +17,7 @@ namespace Money_Locker_Project.Controllers
     [Route("api/merchant/payments")]
     public class MerchantPaymentController : ControllerBase
     {
-     
+        [Route(API_Route.MerchatPayment + End_Point.Payments)]
         [HttpPost]
         public IActionResult MerchantPaymentProcess(PaymentRequest request)
         {

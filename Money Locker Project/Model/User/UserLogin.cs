@@ -5,7 +5,7 @@ namespace MoneyLocker.Model.User
     public class UserLogin
     {
         [JsonProperty("mobile")]
-        public string Mobile { get; set; }
+        public long Mobile { get; set; }
 
         [JsonProperty("email")]
         public string Email { get; set; }
